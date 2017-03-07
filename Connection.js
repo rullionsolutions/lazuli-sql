@@ -115,7 +115,7 @@ module.exports.define("getConnectionID", function () {
     try {
         resultset = this.executeQuery("SELECT CONNECTION_ID()");
         resultset.next();
-        return x.sql.getColumnString(resultset, 1);
+        return this.getColumnString(resultset, 1);
     } finally {
         this.finishedWithResultSet(resultset);
     }
