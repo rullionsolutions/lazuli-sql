@@ -110,6 +110,18 @@ module.exports.define("getConnection", function () {
 });
 
 
+module.exports.define("getConnectionID", function () {
+    var resultset;
+    try {
+        resultset = this.executeQuery("SELECT CONNECTION_ID()");
+        resultset.next();
+        return x.sql.getColumnString(resultset, 1);
+    } finally {
+        this.finishedWithResultSet(resultset);
+    }
+});
+
+
 module.exports.define("getNewJDBCConnection", function () {
     var conn;
     if (this.use_pool) {
