@@ -460,7 +460,8 @@ module.exports.define("composeMySQLDumpCommand", function (options) {
     var i;
 
     options = options || {};
-    out += " --skip-comments --skip-opt --add-drop-table --extended-insert";
+    out += " --skip-comments --skip-opt --quick --add-drop-table --max_allowed_packet=50M --extended-insert";
+    // out += " --skip-comments --skip-opt --add-drop-table --extended-insert";
     out += (options.where_clause ? " --where=" + options.where_clause : "");
     out += (options.output_file ? " --result-file=" + options.output_file : "");
     for (i = 0; options.ignore_tables && i < options.ignore_tables.length; i += 1) {
