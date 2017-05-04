@@ -251,7 +251,7 @@ module.exports.define("addSQLState", function (e, sql) {
         e.sql_state = String(e.javaException.getSQLState());
         e.sql_connection_failure = (e.sql_state === "08S01" || e.sql_state === "40001" || e.sql_state === "08003");
     }
-    if (e.sql_state === "3D000" || e.sql_state === "42000") {
+    if (e.sql_state === "3D000" /*|| e.sql_state === "42000"*/) {
         module.exports.database_exists = false;
     }
 
