@@ -129,13 +129,8 @@ module.exports.define("getNewJDBCConnection", function () {
     } else {
         conn = this.getNewJDBCConnectionDirect();
     }
-    // hash_code = String(conn.hashCode());
-    if (this.database) {
-        try {
-            conn.setCatalog(this.database);
-        } catch (ignore) {
-            this.database_exists = false;
-        }
+    if (this.database && this.database_exists) {
+        conn.setCatalog(this.database);
     }
     if (typeof this.auto_commit === "boolean") {
         conn.setAutoCommit(this.auto_commit);        // this call tests MySQL connection
@@ -255,6 +250,9 @@ module.exports.define("addSQLState", function (e, sql) {
     if (e.javaException && typeof e.javaException.getSQLState === "function") {
         e.sql_state = String(e.javaException.getSQLState());
         e.sql_connection_failure = (e.sql_state === "08S01" || e.sql_state === "40001" || e.sql_state === "08003");
+    }
+    if (e.sql_state === "3D000" || e.sql_state === "42000") {
+        module.exports.database_exists = false;
     }
 
     this.debug("SQL error: " + e.toString() + ", sql_state: " + e.sql_state +
