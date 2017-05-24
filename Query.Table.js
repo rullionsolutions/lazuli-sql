@@ -37,6 +37,8 @@ module.exports.define("addColumn", function (col_spec) {
     col_spec.table = this;
     if (col_spec.sql_function) {
         col_spec.name = this.alias + "_" + col_spec.name;
+        col_spec.sql_function = SQL.Connection.detokenizeAlias(col_spec.sql_function,
+            this.alias);
     } else {
         col_spec.name = this.alias + "." + col_spec.name;
     }
