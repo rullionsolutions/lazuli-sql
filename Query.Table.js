@@ -18,7 +18,7 @@ module.exports = Core.Base.clone({
 
 
 module.exports.defbind("manageAlias", "clone", function (spec) {
-    this.alias = spec.alias || this.alias || String.fromCharCode(65 + this.index);
+    this.alias = (spec && spec.alias) || this.alias || String.fromCharCode(65 + this.index);
     if (this.join_cond) {                       // matches '?' NOT preceded by '\'
         this.join_cond = SQL.Connection.detokenizeAlias(this.join_cond, this.alias);
     }
